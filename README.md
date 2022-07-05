@@ -10,16 +10,24 @@ Mysql Database
 Instructions
 
 Via Node js
-si no tienen el vue instalado seria con el primer comando
+with this command install vue if is necessary
 
 npm install -g @vue/cli
 
-posteriormente con este comando ubicados en la carpeta del proyecto front
+with this command we install all modules node for the proyect
 npm install
 
-Crear bd en mysql llamada library
+create bd in mysql called library
 
-importar la bd library.sql en el repositorio
+import la bd library.sql in the repo
+
+change application properties with your configuration
+
+spring.datasource.url=jdbc:mysql://localhost:3306/library 
+spring.datasource.username=root
+spring.datasource.password=yourPass
+server.error.whitelabel.enabled=false
 
 
-Correr la aplicacion Java y luego en la aplicacion front ejecutar npm run serve
+
+Run Java app as Spring boot app and the front end execute the comand  run npm serve
