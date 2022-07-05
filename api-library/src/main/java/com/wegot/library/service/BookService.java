@@ -10,9 +10,9 @@ public interface BookService {
 
 	public Iterable<Book> findAll() throws BookException ;
 
-	public Long add(BookDTO book) throws BookException ;
+	public Book add(BookDTO book) throws BookException ;
 	
-	public Long update(BookDTO book) throws BookException ;
+	public Book update(BookDTO book) throws BookException ;
 	
 	public void delete(Long id) throws BookException ;
 	

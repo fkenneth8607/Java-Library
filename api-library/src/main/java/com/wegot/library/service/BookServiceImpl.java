@@ -52,7 +52,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Long add(BookDTO bookDto) throws BookException {
+	public Book add(BookDTO bookDto) throws BookException {
 
 		if (isValid(bookDto)) {
 			Book book = new Book();
@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService {
 			book.setPage_number(bookDto.getPage_number());
 
 			bookRepository.save(book);
-			return book.getId();
+			return book;
 		}else {
 			return null;
 		}
@@ -72,7 +72,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Long update(BookDTO bookDto) throws BookException {
+	public Book update(BookDTO bookDto) throws BookException {
 
 		if (isValid(bookDto)) {
 			Book book = new Book();
@@ -84,7 +84,7 @@ public class BookServiceImpl implements BookService {
 			book.setPage_number(bookDto.getPage_number());
 
 			bookRepository.save(book);
-			return book.getId();
+			return book;
 		}else {
 			return null;
 		}

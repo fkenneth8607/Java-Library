@@ -59,7 +59,7 @@ public class BookController {
 	@PostMapping("/books")
 	public ResponseEntity<Object> createBook(@RequestBody BookDTO book) {
 		try {
-			Long savedBook = bookService.add(book);
+			bookService.add(book);
 			return new ResponseEntity<Object>("Book added Succefully!" , HttpStatus.OK);
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
@@ -74,7 +74,7 @@ public class BookController {
 	public ResponseEntity<HttpStatus> updateBook(@PathVariable("id") Long id, @RequestBody BookDTO book) {
 		try {
 			book.setId(id);
-			Long savedBook = bookService.update(book);
+			bookService.update(book);
 			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
