@@ -1,21 +1,25 @@
 # Java-Library
 
 Simple application to manage books in
-Java EE 8
-Rest APIs
-vuejs
-Mysql Database
+- Java EE 8
+- Spring boot
+- Rest APIs
+- vuejs 2
+- Mysql Database
+- Clean Architecture
 
 
 Instructions
+______________________________________________
 
 Via Node js
-with this command install vue if is necessary
+with this command install vue if is necessary with next command:
 
-npm install -g @vue/cli
+  npm install -g @vue/cli
 
 with this command we install all modules node for the proyect
-npm install
+
+  npm install
 
 create bd in mysql called library
 
