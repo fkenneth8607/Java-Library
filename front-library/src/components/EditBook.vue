@@ -54,7 +54,7 @@ export default {
         updateBook() {
             BookDataService.update(this.currentBook.id, this.currentBook)
                 .then(() => {
-                    this.message = 'The book was updated successfully!'
+                    this.message = 'El libro fue actualizado Exitosamente!'
                 })
                 .catch(e => {
                     alert(e)
