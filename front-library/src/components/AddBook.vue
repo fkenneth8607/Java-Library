@@ -6,7 +6,7 @@
                 <input type="text" class="form-control" id="isbn" required name="isbn" v-model="book.isbn">
             </div>
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="title" class="form-label">Titulo</label>
                 <input type="text" class="form-control" id="title" required name="title" v-model="book.title">
             </div>
             <div class="mb-3">
@@ -22,14 +22,14 @@
                 <input type="number" class="form-control" id="page_number" required name="page_number" v-model="book.page_number">
             </div>
             <div class="mb-3">
-                <button @click="saveBook" class="btn btn-primary">Submit</button>
+                <button @click="saveBook" class="btn btn-primary">Guardar</button>
             </div>
         </div>
         <div v-else>
             <div class="alert alert-success" role="alert">
-                Save book successfully!
+               Libro Guardado Exitosamente!
             </div>
-            <button @click="newBook" class="btn btn-primary">Add New Book</button>
+            <button @click="newBook" class="btn btn-primary">Agregar Nuevo Libro</button>
         </div>
     </div>
 </template>

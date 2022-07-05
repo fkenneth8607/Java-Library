@@ -18,7 +18,7 @@
                     <td>{{book.author}}</td>
                     <td>{{book.editorial}}</td>
                     <td>{{book.page_number}}</td>
-                    <td><a :href="'/books/' + book.id" class="btn btn-primary">Edit</a></td>
+                    <td><a :href="'/books/' + book.id" class="btn btn-primary">Editar</a></td>
                 </tr>
             </tbody>
         </table>

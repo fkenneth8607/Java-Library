@@ -2,11 +2,11 @@
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <router-link to="/" class="navbar-brand">Book Manager</router-link>
+        <router-link to="/" class="navbar-brand">Gestiòn de Libros</router-link>
         <div class="collapse navbar-collapse">
           <div class="navbar-nav">
-            <router-link to="/books" class="nav-link">Book List</router-link>
-            <router-link to="/add" class="nav-link">Add New Book</router-link>
+            <router-link to="/books" class="nav-link">Lista de Libros</router-link>
+            <router-link to="/add" class="nav-link">Agregar Nuevo Libro</router-link>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
                 <input type="text" class="form-control" id="isbn" required name="isbn" v-model="currentBook.isbn">
             </div>
             <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
+                <label for="title" class="form-label">Titulo</label>
                 <input type="text" class="form-control" id="title" required name="title" v-model="currentBook.title">
             </div>
             <div class="mb-3">
@@ -21,8 +21,8 @@
                 <input type="number" class="form-control" id="page_number" required name="page_number" v-model="currentBook.page_number">
             </div>
             <div class="mb-3">
-                <button @click="updateBook" class="btn btn-primary me-3">Update</button>
-                <button @click="deleteBook" class="btn btn-danger">Delete</button>
+                <button @click="updateBook" class="btn btn-primary me-3">Actualizar</button>
+                <button @click="deleteBook" class="btn btn-danger">Eliminar</button>
             </div>
              <div class="alert alert-success" role="alert" v-if="message">
                 {{message}}
