@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse">
           <div class="navbar-nav">
             <router-link to="/books" class="nav-link">Lista de Libros</router-link>
-            <router-link to="/add" class="nav-link">Agregar Nuevo Libro</router-link>
+          
           </div>
         </div>
       </div>

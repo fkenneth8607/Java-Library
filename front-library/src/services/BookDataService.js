@@ -10,7 +10,7 @@ class BookDataService {
     }
 
     create(data) {
-        return http.post('/books', data)
+        return http.post('/books', data);
     }
 
     update(id, data) {

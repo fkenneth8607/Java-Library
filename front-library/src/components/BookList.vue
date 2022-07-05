@@ -1,5 +1,7 @@
 <template>
     <div>
+        <h3>Gestión de Libros</h3>
+        <router-link to="/add" class="btn btn-primary mt-4 mb-4">Agregar Nuevo Libro</router-link>
         <table class="table">
             <thead>
                 <tr>
@@ -8,7 +10,7 @@
                 <th scope="col">Autor</th>
                 <th scope="col">Editorial</th>
                 <th scope="col">Numero de Paginas</th>
-                <th scope="col">Actions</th>
+                <th scope="col" colspan="2">Actions</th>
                 </tr>
             </thead>
             <tbody v-for="(book, index) in books" :key="index">
@@ -19,6 +21,7 @@
                     <td>{{book.editorial}}</td>
                     <td>{{book.page_number}}</td>
                     <td><a :href="'/books/' + book.id" class="btn btn-primary">Editar</a></td>
+                    <td><button @click="deleteBook(book.id)" class="btn btn-danger">Eliminar</button></td>
                 </tr>
             </tbody>
         </table>
@@ -44,6 +47,16 @@ export default {
                 })
                 .catch(e => {
                     alert(e)
+                })
+        },
+         deleteBook(id) {
+            BookDataService.delete(id)
+                .then((response) => {
+                    alert(response.data)
+                    this.retrieveBooks();
+                })
+                .catch(e => {
+                    alert(e.response.data)
                 })
         }
     },

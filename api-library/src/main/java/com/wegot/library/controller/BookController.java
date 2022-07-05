@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wegot.library.dto.BookDTO;
 import com.wegot.library.entity.Book;
-import com.wegot.library.repository.BookRepository;
+import com.wegot.library.service.BookService;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -26,12 +27,13 @@ public class BookController {
 	private Logger logger = LoggerFactory.getLogger(BookController.class);
 	
 	@Autowired
-	private BookRepository bookRepository;
+	private BookService bookService ;
+	
 	
 	@GetMapping("/books")
 	public ResponseEntity<Object> getAllBooks(){
 		try {
-			Iterable<Book> books = bookRepository.findAll();
+			Iterable<Book> books = bookService.findAll();
 			return new ResponseEntity<Object>(books, HttpStatus.OK);
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
@@ -42,7 +44,7 @@ public class BookController {
 	@GetMapping("/books/{id}")
 	public ResponseEntity<Object> getBookById(@PathVariable("id") Long id) {
 		try {
-			Book book = bookRepository.findById(id).get();
+			BookDTO book = bookService.findById(id);
 			if(book != null) {
 				return new ResponseEntity<Object>(book, HttpStatus.OK);				
 			} else {
@@ -55,36 +57,41 @@ public class BookController {
 	}
 	
 	@PostMapping("/books")
-	public ResponseEntity<Object> createBook(@RequestBody Book book) {
+	public ResponseEntity<Object> createBook(@RequestBody BookDTO book) {
 		try {
-			Book savedBook = bookRepository.save(book);
-			return new ResponseEntity<Object>(savedBook, HttpStatus.OK);
+			Long savedBook = bookService.add(book);
+			return new ResponseEntity<Object>("Book added Succefully!" , HttpStatus.OK);
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(
+					  ex.getMessage(), 
+			          HttpStatus.BAD_REQUEST);
+			     
 		}
 	}
 
 	@PutMapping("/books/{id}")
-	public ResponseEntity<Object> updateBook(@PathVariable("id") Long id, @RequestBody Book book) {
+	public ResponseEntity<HttpStatus> updateBook(@PathVariable("id") Long id, @RequestBody BookDTO book) {
 		try {
 			book.setId(id);
-			Book savedBook = bookRepository.save(book);
-			return new ResponseEntity<Object>(savedBook, HttpStatus.OK);
-		} catch(Exception ex) {
-			logger.error(ex.getMessage(), ex);
-			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@DeleteMapping("/books/{id}")
-	public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") Long id) {
-		try {
-			bookRepository.deleteById(id);
+			Long savedBook = bookService.update(book);
 			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@DeleteMapping("/books/{id}")
+	public ResponseEntity<Object> deleteBook(@PathVariable("id") Long id) {
+		try {
+			bookService.delete(id);
+			return new ResponseEntity<Object>("Book Deleted Succefully!", HttpStatus.OK);
+		} catch(Exception ex) {
+			logger.error(ex.getMessage(), ex);
+			return new ResponseEntity<>(
+					  ex.getMessage(), 
+			          HttpStatus.BAD_REQUEST);
 		}
 	}
 	
