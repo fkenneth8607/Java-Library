@@ -1,6 +1,6 @@
 # Java-Library
 
-Simple application to manage books in
+Simple Crud application to manage books using:
 - Java EE 8
 - Spring boot
 - Rest APIs
