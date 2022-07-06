@@ -8,22 +8,23 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
- 
+import java.io.IOException;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.persistence.EntityNotFoundException;
-
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations; 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.wegot.library.dto.BookDTO;
- 
 import com.wegot.library.exception.BookException;
 import com.wegot.library.service.BookService;
 
+@RunWith(SpringRunner.class)
 public class BookControllerTest {
 	    @Mock //Test 
 	    BookService mockBookService;
@@ -31,68 +32,67 @@ public class BookControllerTest {
 	    @InjectMocks //Mock  
 	    BookController underTest;
  
-	    @Test
-	    void getById_shouldReturnBookDTO() throws BookException{
-
-	        //given
-	        BookDTO expected = new BookDTO();
-	        expected.setTitle("test");
-
-	        when(mockBookService.findById(anyLong())).thenReturn(expected);
-
-	        //when
-	        ResponseEntity<Object> response = underTest.getBookById(1L);
-	        BookDTO actual = (BookDTO) response.getBody();
-
-	        //then
-	        assertAll(
-	                ()->assertNotNull(actual),
-	                ()->assertEquals(HttpStatus.OK,response.getStatusCode()),
-	                ()->assertEquals(expected.getTitle(),actual.getTitle())
-	        );
+	    @Before
+	    public void setUp() throws IOException {
+	        MockitoAnnotations.openMocks(this);
 	    }
+	    	    
+	    @Test
+	    public void getById_shouldReturnBookDTO() throws BookException{
 
-	    @SuppressWarnings("null")
-		@Test
-	    void getById_shouldReturnStatusNotFound_whenBookIdNotExist() throws BookException{
+	    	   BookDTO bookDto = new BookDTO();
+		       bookDto.setTitle("test");
+		       bookDto.setEditorial("test");
+		       bookDto.setPage_number(1L);
+		       bookDto.setAuthor("test");
+		       bookDto.setIsbn("test");
 
-	        //given
-	        when(mockBookService.findById(anyLong())).thenReturn(null);
-
-	        //when
-	        ResponseEntity<Object> response = underTest.getBookById(1L);
-	   
-
-	        //then
-	        assertNull(response);
-	        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+		       //given
+		        when(mockBookService.findById(anyLong())).thenReturn(bookDto);
+		        
+		        //when
+		        ResponseEntity<Object> response = underTest.getBookById(1L);
+		        
+		        //then
+		        assertNotNull(response);
+		        assertEquals(HttpStatus.OK,response.getStatusCode());
+		        assertNotNull(response.getBody());
+		        assertNotNull(((BookDTO)response.getBody()).getAuthor());
+		        assertEquals(((BookDTO)response.getBody()).getAuthor(), bookDto.getAuthor());
 
 	    }
 
 	    @Test
-	    void deleteById_shouldDeleteSuccesfully(){
+	    public void getById_shouldReturnNull() throws BookException{
 
-	        //given
-	        //when
-	        ResponseEntity<Object> response = underTest.deleteBook(1L);
-
-	        //then
-	        assertEquals(HttpStatus.NO_CONTENT,response.getStatusCode());
+		       //given
+		        when(mockBookService.findById(anyLong())).thenReturn(null);
+		        
+		        //when
+		        ResponseEntity<Object> response = underTest.getBookById(1L);
+		        
+		        //then
+		        assertNotNull(response);
+		        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+		        assertNull(response.getBody());
 
 	    }
-
+	    
 	    @Test
-	    void deleteById_shouldReturnStatusNotFound_whenBookIdNotExist() throws BookException{
+	    public void getById_shouldCathException() throws BookException{
 
-	        //given
-	        Mockito.doThrow(EntityNotFoundException.class).
-	                when(mockBookService).delete(anyLong());
-
-	        //when
-	        ResponseEntity<Object> response = underTest.deleteBook(1L);
-
-	        //then
-	        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+	    	BookException ex = new BookException("Error");
+		       //given
+		        when(mockBookService.findById(anyLong())).thenThrow(ex);
+		        
+		        //when
+		        ResponseEntity<Object> response = underTest.getBookById(1L);
+		        
+		        //then
+		        assertNotNull(response);
+		        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+		        assertNull(response.getBody());
 
 	    }
+	      
 }

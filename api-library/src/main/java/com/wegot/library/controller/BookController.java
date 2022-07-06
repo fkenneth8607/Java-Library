@@ -60,7 +60,7 @@ public class BookController {
 	public ResponseEntity<Object> createBook(@RequestBody BookDTO book) {
 		try {
 			bookService.add(book);
-			return new ResponseEntity<Object>("Book added Succefully!" , HttpStatus.OK);
+			return new ResponseEntity<Object>("Book added Succefully!" , HttpStatus.CREATED);
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			return new ResponseEntity<>(

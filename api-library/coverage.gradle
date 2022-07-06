@@ -1,0 +1,40 @@
+def jacocoExclutions = [
+]
+
+test.finalizedBy jacocoTestReport
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: jacocoExclutions)
+        }))
+    }
+    reports {
+        xml.enabled = true
+        csv.enabled = false
+        html.enabled = true
+        xml.destination(file("${buildDir}/jacocoReport/jacocoXML/jacoco.xml"))
+        html.destination(file("${buildDir}/jacocoReport/jacocoHTML/"))
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.85
+            }
+        }
+        rule {
+            enabled = true
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 0.85
+            }
+        }
+    }
+}

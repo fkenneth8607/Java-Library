@@ -2,7 +2,12 @@ plugins {
 	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
+
+apply plugin: 'jacoco'
+apply from: 'coverage.gradle'
+
 
 group = 'com.wegot'
 version = '1.0.0'
@@ -17,8 +22,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation('junit:junit:4.13')
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+
