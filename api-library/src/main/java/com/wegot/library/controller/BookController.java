@@ -71,14 +71,14 @@ public class BookController {
 	}
 
 	@PutMapping("/books/{id}")
-	public ResponseEntity<HttpStatus> updateBook(@PathVariable("id") Long id, @RequestBody BookDTO book) {
+	public ResponseEntity<Object> updateBook(@PathVariable("id") Long id, @RequestBody BookDTO book) {
 		try {
 			book.setId(id);
 			bookService.update(book);
-			return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+			return new ResponseEntity<Object>("Book Updated Succefully!", HttpStatus.OK);
 		} catch(Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			return new ResponseEntity<HttpStatus>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(ex.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
