@@ -9,6 +9,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.test.context.junit4.SpringRunner;
 
 import org.junit.Before;
@@ -21,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.wegot.library.dto.BookDTO;
+import com.wegot.library.entity.Book;
 import com.wegot.library.exception.BookException;
 import com.wegot.library.service.BookService;
 
@@ -94,5 +98,115 @@ public class BookControllerTest {
 		        assertNull(response.getBody());
 
 	    }
+	    
+	    
+	    @Test
+	    public void getAll_shouldReturnListBookDTO() throws BookException{
+
+	    	   Book book = new Book();
+	    	   book.setTitle("test");
+	    	   book.setEditorial("test");
+	    	   book.setPage_number(1L);
+	    	   book.setAuthor("test");
+		       book.setIsbn("test");
+		       Iterable<Book> bookList = Collections.singletonList(book);
+		       
+		       
+		       //mocking findAll method
+		        when(mockBookService.findAll()).thenReturn(bookList);
+ 
+		        //when
+		        ResponseEntity<Object> response = underTest.getAllBooks();
+		        
+		        //then
+		        assertNotNull(response);
+		       
+	    }
+	    
+	    
+	    @Test
+	    public void saveBook_shouldReturnOkResult() throws BookException{
+
+	    	   BookDTO bookDTO = new BookDTO();
+	    	   bookDTO.setTitle("test");
+	    	   bookDTO.setEditorial("test");
+	    	   bookDTO.setPage_number(1L);
+	    	   bookDTO.setAuthor("test");
+	    	   bookDTO.setIsbn("test");
+ 
+
+	    	   Book book = new Book();
+	    	   book.setTitle("test");
+	    	   book.setEditorial("test");
+	    	   book.setPage_number(1L);
+	    	   book.setAuthor("test");
+		       book.setIsbn("test");
+		       
+		       //mocking save
+		        when(mockBookService.add(bookDTO)).thenReturn(book);
+ 
+		        //when
+		        ResponseEntity<Object> response = underTest.createBook(bookDTO);
+		        
+		        //then
+		        assertNotNull(response);
+		        assertEquals(HttpStatus.CREATED,response.getStatusCode());
+		        assertNotNull(response.getBody()); 
+		       
+	    }
+
+	    
+	    @Test
+	    public void updateBook_shouldReturnOkResult() throws BookException{
+
+	    	   BookDTO bookDTO = new BookDTO();
+	    	   bookDTO.setTitle("test");
+	    	   bookDTO.setEditorial("test");
+	    	   bookDTO.setPage_number(1L);
+	    	   bookDTO.setAuthor("test");
+	    	   bookDTO.setIsbn("test");
+ 
+
+	    	   Book book = new Book();
+	    	   book.setTitle("test");
+	    	   book.setEditorial("test");
+	    	   book.setPage_number(1L);
+	    	   book.setAuthor("test");
+		       book.setIsbn("test");
+		       
+		       //mocking update
+		        when(mockBookService.update(bookDTO)).thenReturn(book);
+ 
+		        //when
+		        ResponseEntity<Object> response = underTest.updateBook(bookDTO.getId(),bookDTO);
+		        
+		        //then
+		        assertNotNull(response);
+		        assertEquals(HttpStatus.OK,response.getStatusCode());
+		        assertNotNull(response.getBody()); 
+		       
+	    }
+	    
+
+	    @Test
+	    public void deleteBook_shouldReturnOkResult() throws BookException{
+
+	    	   BookDTO bookDTO = new BookDTO();
+	    	   bookDTO.setTitle("test");
+	    	   bookDTO.setEditorial("test");
+	    	   bookDTO.setPage_number(1L);
+	    	   bookDTO.setAuthor("test");
+	    	   bookDTO.setIsbn("test");
+  
+		        
+		        //when
+		        ResponseEntity<Object> response = underTest.deleteBook(bookDTO.getId());
+		        
+		        //then
+		        assertNotNull(response);
+		        assertEquals(HttpStatus.OK,response.getStatusCode()); 
+		       
+	    }
+
 	      
 }
